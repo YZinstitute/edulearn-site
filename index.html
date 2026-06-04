@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>YZinstitute — คอร์สเตรียมสอบ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green: #1a4731;
+      --green-mid: #2d6a4f;
+      --green-light: #40916c;
+      --green-pale: #d8f3dc;
+      --black: #0d0d0d;
+      --white: #ffffff;
+      --gray: #f4f4f2;
+      --gray-mid: #e8e8e4;
+      --text: #1a1a1a;
+      --text-muted: #5a5a5a;
+      --border: #d0d0c8;
+      --radius: 12px;
+      --radius-lg: 20px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Sarabun', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 70px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none;
+    }
+    .nav-logo img {
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--green);
+    }
+    .nav-logo-text {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      color: var(--green);
+    }
+    .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--green); }
+    .nav-cta {
+      background: var(--green) !important;
+      color: var(--white) !important;
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+    }
+    .nav-cta:hover { background: var(--green-mid) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--black);
+      color: var(--white);
+      padding: 5rem 5% 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(26,71,49,0.5) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(64,145,108,0.25);
+      border: 1px solid rgba(64,145,108,0.5);
+      color: #74c69d;
+      font-size: 0.78rem; font-weight: 600;
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 1.4rem;
+      letter-spacing: 0.04em;
+    }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .hero h1 em { font-style: italic; color: #74c69d; }
+    .hero p {
+      color: rgba(255,255,255,0.65);
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      max-width: 460px;
+    }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--green-light);
+      color: var(--white);
+      padding: 0.85rem 1.8rem;
+      border-radius: 10px;
+      font-size: 0.95rem; font-weight: 600;
+      text-decoration: none;
+      font-family: 'Sarabun', sans-serif;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--green-mid); transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      padding: 0.85rem 1.8rem;
+      border-radius: 10px;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      font-size: 0.95rem; font-weight: 600;
+      text-decoration: none;
+      font-family: 'Sarabun', sans-serif;
+      transition: border-color 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+    .btn-outline:hover { border-color: rgba(255,255,255,0.7); transform: translateY(-1px); }
+
+    .hero-visual {
+      position: relative;
+      display: flex; flex-direction: column; gap: 1rem;
+      z-index: 1;
+    }
+    .hero-img-wrap {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 2px solid rgba(64,145,108,0.4);
+      height: 280px;
+    }
+    .hero-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      filter: brightness(0.85);
+    }
+    .hero-stat-row {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 0.8rem;
+    }
+    .hero-stat {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius);
+      padding: 0.9rem 1rem;
+      text-align: center;
+    }
+    .hero-stat .num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      color: #74c69d;
+    }
+    .hero-stat .lbl {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.55);
+    }
+
+    /* ── SECTION COMMONS ── */
+    .section { padding: 5rem 5%; max-width: 1200px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--green-light); margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+      color: var(--black); margin-bottom: 0.8rem;
+    }
+    .section-sub {
+      color: var(--text-muted); font-size: 0.95rem;
+      max-width: 520px; margin-bottom: 2.8rem;
+    }
+
+    /* ── COURSES GRID ── */
+    .courses-bg { background: var(--gray); padding: 5rem 5%; }
+    .courses-inner { max-width: 1200px; margin: 0 auto; }
+
+    /* Category headers */
+    .cat-label {
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--green-light);
+      border-left: 3px solid var(--green-light);
+      padding-left: 10px;
+      margin: 2.5rem 0 1.2rem;
+    }
+    .cat-label:first-of-type { margin-top: 0; }
+
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.1rem;
+    }
+    .course-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.4rem 1.5rem;
+      display: flex; flex-direction: column; gap: 0.6rem;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .course-card:hover {
+      border-color: var(--green-light);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(26,71,49,0.1);
+    }
+    .course-name {
+      font-weight: 600; font-size: 0.92rem;
+      color: var(--black); line-height: 1.45;
+    }
+    .course-detail {
+      font-size: 0.78rem; color: var(--text-muted);
+    }
+    .course-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: auto; padding-top: 0.8rem;
+      border-top: 1px solid var(--gray-mid);
+    }
+    .price-badge {
+      font-weight: 700; font-size: 1rem;
+      color: var(--green);
+    }
+    .price-original {
+      font-size: 0.75rem; color: var(--text-muted);
+      text-decoration: line-through; margin-left: 4px;
+    }
+    .tag-pill {
+      font-size: 0.68rem; font-weight: 700;
+      padding: 3px 10px; border-radius: 100px;
+      letter-spacing: 0.03em;
+    }
+    .tag-green { background: var(--green-pale); color: var(--green); }
+    .tag-amber { background: #fff3cd; color: #856404; }
+    .tag-blue  { background: #dbeafe; color: #1d4ed8; }
+    .tag-red   { background: #fee2e2; color: #b91c1c; }
+
+    /* ── HOW IT WORKS ── */
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+      gap: 2rem; margin-top: 3rem;
+    }
+    .step { display: flex; flex-direction: column; gap: 0.8rem; }
+    .step-num {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--green); color: var(--white);
+      font-weight: 700; font-size: 0.9rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .step h3 { font-size: 0.98rem; font-weight: 600; color: var(--black); }
+    .step p { font-size: 0.83rem; color: var(--text-muted); }
+
+    /* ── BOOKING ── */
+    .booking-wrap {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: start;
+    }
+    .booking-form {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+    }
+    .booking-form h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.6rem; color: var(--black); margin-bottom: 1.5rem;
+    }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label {
+      display: block; font-size: 0.82rem; font-weight: 600;
+      color: var(--text); margin-bottom: 0.4rem;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%; padding: 0.72rem 1rem;
+      border: 1.5px solid var(--border); border-radius: 8px;
+      font-family: 'Sarabun', sans-serif; font-size: 0.9rem;
+      color: var(--text); background: var(--white);
+      transition: border-color 0.2s; outline: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--green-light); }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .btn-submit {
+      width: 100%; background: var(--green);
+      color: var(--white); padding: 0.9rem;
+      border: none; border-radius: 10px;
+      font-family: 'Sarabun', sans-serif;
+      font-size: 0.95rem; font-weight: 600;
+      cursor: pointer; transition: background 0.2s;
+      margin-top: 0.4rem;
+    }
+    .btn-submit:hover { background: var(--green-mid); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--black); color: rgba(255,255,255,0.55);
+      padding: 3rem 5%; text-align: center;
+    }
+    .footer-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem; color: var(--white);
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-bottom: 1rem; text-decoration: none;
+    }
+    .footer-logo img {
+      width: 36px; height: 36px;
+      border-radius: 50%; object-fit: cover;
+      border: 1.5px solid var(--green-light);
+    }
+    footer p { font-size: 0.82rem; margin-bottom: 0.4rem; }
+    footer a { color: rgba(255,255,255,0.55); text-decoration: none; }
+    footer a:hover { color: var(--white); }
+
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; gap: 2.5rem; }
+      .hero-visual { display: none; }
+      .booking-wrap { grid-template-columns: 1fr; gap: 2rem; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <img src="logo.jpg" alt="YZinstitute logo"/>
+    <span class="nav-logo-text">YZinstitute</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#courses">คอร์สเรียน</a></li>
+    <li><a href="#how">วิธีสมัคร</a></li>
+    <li><a href="#booking" class="nav-cta">สมัครเรียน</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div style="position:relative;z-index:1;">
+    <div class="hero-badge">🦉 คอร์สเตรียมสอบครบวงจร</div>
+    <h1>เรียนให้ <em>ฉลาด</em><br/>สอบให้ <em>ผ่าน</em></h1>
+    <p>คอร์สเตรียมสอบคุณภาพสูง — คณิตศาสตร์ วิทยาศาสตร์ ภาษาอังกฤษ และอื่นๆ ออกแบบมาเพื่อนักเรียนทุกระดับ</p>
+    <div class="hero-actions">
+      <a href="#courses" class="btn-primary">ดูคอร์สทั้งหมด →</a>
+      <a href="#booking" class="btn-outline">สมัครเรียนฟรี</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-img-wrap">
+      <img src="logo.jpg" alt="YZinstitute"/>
+    </div>
+    <div class="hero-stat-row">
+      <div class="hero-stat">
+        <div class="num">20+</div>
+        <div class="lbl">คอร์สเรียน</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">500+</div>
+        <div class="lbl">นักเรียน</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">4.9★</div>
+        <div class="lbl">คะแนนรีวิว</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COURSES -->
+<div class="courses-bg" id="courses">
+  <div class="courses-inner">
+    <div class="section-label">คอร์สเรียนทั้งหมด</div>
+    <h2 class="section-title" style="font-family:'DM Serif Display',serif;font-size:clamp(1.7rem,3vw,2.4rem);color:var(--black);margin-bottom:0.5rem;">เลือกคอร์สที่ใช่สำหรับคุณ</h2>
+    <p style="color:var(--text-muted);font-size:0.95rem;margin-bottom:2rem;">ราคาเป็นบาท · ทุกคอร์สออนไลน์</p>
+
+    <!-- NEW / Special -->
+    <div class="cat-label">🆕 ใหม่ &amp; พิเศษ</div>
+    <div class="courses-grid">
+      <div class="course-card">
+        <div class="course-name">NEW Mock Exam for TU89: The Final Tote</div>
+        <div class="course-footer">
+          <span class="price-badge">฿200</span>
+          <span class="tag-pill tag-red">NEW</span>
+        </div>
+      </div>
+      <div class="course-card">
+        <div class="course-name">คอร์สบูฟเฟต์เข้าเตรียมอุดมฯ รวม Final Sheet</div>
+        <div class="course-footer">
+          <span class="price-badge">฿6,000</span>
+          <span class="tag-pill tag-amber">แพ็กเกจใหญ่</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- สอวน. -->
+    <div class="cat-label">🔬 คอร์สสอวน.</div>
+    <div class="courses-grid">
+      <div class="course-card">
+        <div class="course-name">คอร์สแพ็คคู่สอวน. ชีววิทยาและชีววิทยาพื้นฐาน</div>
+        <div class="course-footer">
+          <span class="price-badge">฿2,000</span>
+          <span class="tag-pill tag-green">สอวน.</span>
+        </div>
+      </div>
+      <div class="course-card">
+        <div class="course-name">คอร์สคณิตศาสตร์สำหรับสอวน.</div>
+        <div class="course-footer">
+          <span class="price-badge">฿2,000</span>
+          <span class="tag-pill tag-green">สอวน.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ม.4 เด็กเตรียมฯ -->
+    <div class="cat-label">📚 คอร์ส ม.4 ฉบับเด็กเตรียมฯ</div>
+    <div class="courses-grid">
+      <div class="course-card">
+        <div class="course-name">เทอม 1 — เรื่อง เซต ตรรกศาสตร์ จำนวนจริง</div>
+        <div class="course-detail">PRO ลด 50%</div>
+        <div class="course-footer">
+          <span class="price-badge">฿1,000 <span class="price-original">฿2,000</span></span>
+          <span class="tag-pill tag-red">PRO -50%</span>
+        </div>
+      </div>
+      <div class="course-card">
+        <div class="course-name">เทอม 2 — ความสัมพันธ์และฟังก์ชัน เรขาคณิตวิเคราะห์ ภาคตัดกรวย</div>
+        <div class="course-detail">PRO ลด 50%</div>
+        <div class="course-footer">
+          <span class="price-badge">฿1,000 <span class="price-original">฿2,000</span></span>
+          <span class="tag-pill tag-red">PRO -50%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- by YZinstitute standalone -->
+    <div class="cat-label">✏️ คอร์สเดี่ยว by YZinstitute</div>
+    <div class="courses-grid">
+      <div class="course-card">
+        <div class="course-name">เรขาคณิตวิเคราะห์และภาคตัดกรวย</div>
+        <div class="course-footer">
+          <span class="price-badge">฿500</span>
+          <span class="tag-pill tag-green">คณิต</span>
+        </div>
+      </div>
+      <div class="course-card">
+        <div class="course-name">เมทริกซ์</div>
+        <div class="course-footer">
+          <span class="price-badge">฿500</span>
+          <span class="tag-pill tag-green">คณิต</span>
+        </div>
+      </div>
+      <div class="course-card">
+        <div class="course-name">ความสัมพันธ์ฟังก์ชัน</div>
+        <div class="course-footer">
+          <span class="price-badge">฿500</span>
+          <span class="tag-pill tag-green">คณิต</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TU Day Miracle -->
+    <div class="cat-label">🎯 TU Day Miracle</div>
+    <div class="courses-grid">
+      <div class="course-card">
+        <div class="course-name">3 วิชา TU Day Miracle — คณิต วิทย์ ภาษาอังกฤษ</div>
+        <div class="course-detail">พิเศษเฉพาะน้องที่สมัครสอบเตรียมฯ ปีนี้</div>
+        <div class="course-footer">
+          <span class="price-badge">฿500</span>
+          <span class="tag-pill tag-amber">เฉพาะกลุ่ม</span>
+        </div>
+      </div>
+      <div class="course-card">
+        <div class="course-name">TU Day Miracle คณิต</div>
+        <div class="course-footer">
+          <span class="price-badge">฿200</span>
+          <span class="tag-pill tag-green">คณิต</span>
+        </div>
+      </div>
+      <div class="course-card">
+        <div class="course-name">TU Day Miracle วิทย์</div>
+        <div class="course-footer">
+          <span class="price-badge">฿200</span>
+          <span class="tag-pill tag-green">วิทย์</span>
+        </div>
+      </div>
+      <div class="course-card">
+        <div class="course-name">TU Day Miracle ภาษาอังกฤษ</div>
+        <div class="course-footer">
+          <span class="price-badge">฿200</span>
+          <span class="tag-pill tag-blue">อังกฤษ</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Triam -->
+    <div class="cat-label">🏫 คอร์สเนื้อหาเข้าเตรียมฯ (Triam Series)</div>
+    <div class="courses-grid">
+      <div class="course-card">
+        <div class="course-name">คอร์ส Triam Maths</div>
+        <div class="course-footer">
+          <span class="price-badge">฿500</span>
+          <span class="tag-pill tag-green">คณิต</span>
+        </div>
+      </div>
+      <div class="course-card">
+        <div class="course-name">คอร์ส Triam Physics</div>
+        <div class="course-footer">
+          <span class="price-badge">฿500</span>
+          <span class="tag-pill tag-green">วิทย์</span>
+        </div>
+      </div>
+      <div class="course-card">
+        <div class="course-name">คอร์ส Triam Chemistry</div>
+        <div class="course-footer">
+          <span class="price-badge">฿500</span>
+          <span class="tag-pill tag-green">วิทย์</span>
+        </div>
+      </div>
+      <div class="course-card">
+        <div class="course-name">คอร์ส Triam Biology</div>
+        <div class="course-footer">
+          <span class="price-badge">฿500</span>
+          <span class="tag-pill tag-green">วิทย์</span>
+        </div>
+      </div>
+      <div class="course-card">
+        <div class="course-name">คอร์ส Triam English</div>
+        <div class="course-footer">
+          <span class="price-badge">฿500</span>
+          <span class="tag-pill tag-blue">อังกฤษ</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ตะลุยโจทย์ -->
+    <div class="cat-label">📋 คอร์สตะลุยโจทย์เข้าเตรียมฯ (Final Sheet)</div>
+    <div class="courses-grid">
+      <div class="course-card">
+        <div class="course-name">Final Sheet สายวิทย์-คณิต</div>
+        <div class="course-detail">จำนวน 60+ ชั่วโมง</div>
+        <div class="course-footer">
+          <span class="price-badge">฿3,000</span>
+          <span class="tag-pill tag-green">60+ ชม.</span>
+        </div>
+      </div>
+      <div class="course-card">
+        <div class="course-name">Final Sheet สายศิลป์-คำนวณ</div>
+        <div class="course-detail">จำนวน 40+ ชั่วโมง</div>
+        <div class="course-footer">
+          <span class="price-badge">฿2,400</span>
+          <span class="tag-pill tag-blue">40+ ชม.</span>
+        </div>
+      </div>
+      <div class="course-card">
+        <div class="course-name">Final Sheet สายศิลป์-ภาษา</div>
+        <div class="course-detail">จำนวน 25+ ชั่วโมง</div>
+        <div class="course-footer">
+          <span class="price-badge">฿1,800</span>
+          <span class="tag-pill tag-blue">25+ ชม.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mock Exam -->
+    <div class="cat-label">📝 Mock Exam for TU</div>
+    <div class="courses-grid">
+      <div class="course-card">
+        <div class="course-name">Mock Exam for TU สายวิทย์-คณิต</div>
+        <div class="course-footer">
+          <span class="price-badge">฿1,000</span>
+          <span class="tag-pill tag-green">วิทย์-คณิต</span>
+        </div>
+      </div>
+      <div class="course-card">
+        <div class="course-name">Mock Exam for TU สายศิลป์-คำนวณ</div>
+        <div class="course-footer">
+          <span class="price-badge">฿800</span>
+          <span class="tag-pill tag-blue">ศิลป์-คำนวณ</span>
+        </div>
+      </div>
+      <div class="course-card">
+        <div class="course-name">Mock Exam for TU สายศิลป์-ภาษา</div>
+        <div class="course-footer">
+          <span class="price-badge">฿500</span>
+          <span class="tag-pill tag-blue">ศิลป์-ภาษา</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Olympiad -->
+    <div class="cat-label">🏆 Olympiad</div>
+    <div class="courses-grid">
+      <div class="course-card">
+        <div class="course-name">Olympiad Maths for Grade 6, 7, 8</div>
+        <div class="course-detail">สอบถามราคาเพิ่มเติม</div>
+        <div class="course-footer">
+          <span class="price-badge" style="color:var(--text-muted);font-size:0.85rem;">ติดต่อสอบถาม</span>
+          <span class="tag-pill tag-amber">Olympiad</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div style="background:var(--white);padding:5rem 5%;" id="how">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="section-label">ขั้นตอนง่ายๆ</div>
+    <h2 class="section-title">วิธีสมัครเรียน</h2>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>เลือกคอร์ส</h3>
+        <p>เลือกคอร์สที่เหมาะกับระดับและสายการเรียนของคุณ</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>กรอกใบสมัคร</h3>
+        <p>กรอกข้อมูลในแบบฟอร์มด้านล่าง พร้อมระบุคอร์สที่ต้องการ</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>ชำระเงิน</h3>
+        <p>รับข้อมูลการชำระเงินทาง DM และโอนตามจำนวนที่แจ้ง</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>เริ่มเรียนได้เลย!</h3>
+        <p>รับลิงก์คอร์สและเข้าเรียนได้ทันทีหลังยืนยันการชำระ</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BOOKING -->
+<div style="background:var(--gray);padding:5rem 5%;" id="booking">
+  <div class="booking-wrap" style="max-width:1200px;margin:0 auto;">
+    <div>
+      <div class="section-label">สมัครเรียน</div>
+      <h2 class="section-title">พร้อมเริ่มต้นแล้วหรือยัง?</h2>
+      <p class="section-sub">กรอกฟอร์มนี้เพื่อสมัครคอร์ส ทีมงาน YZinstitute จะติดต่อกลับภายใน 24 ชั่วโมง</p>
+
+      <!-- Info cards -->
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem 1.5rem;">
+          <div style="font-weight:600;font-size:0.9rem;color:var(--green);margin-bottom:4px;">🦉 เกี่ยวกับเรา</div>
+          <p style="font-size:0.83rem;color:var(--text-muted);">YZinstitute เปิดสอนคอร์สเตรียมสอบเข้าเตรียมอุดมฯ สอวน. และ TU โดยทีมผู้สอนที่มีประสบการณ์</p>
+        </div>
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem 1.5rem;">
+          <div style="font-weight:600;font-size:0.9rem;color:var(--green);margin-bottom:4px;">💬 ติดต่อเรา</div>
+          <p style="font-size:0.83rem;color:var(--text-muted);">ส่งข้อความผ่านฟอร์มหรือ DM ทาง social media ของ YZinstitute</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="booking-form">
+      <h3>แบบฟอร์มสมัครเรียน</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>ชื่อ</label>
+          <input type="text" placeholder="ชื่อจริง"/>
+        </div>
+        <div class="form-group">
+          <label>นามสกุล</label>
+          <input type="text" placeholder="นามสกุล"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Line ID / อีเมล</label>
+        <input type="text" placeholder="line_id หรือ email@example.com"/>
+      </div>
+      <div class="form-group">
+        <label>ระดับชั้น</label>
+        <select>
+          <option value="">เลือกระดับชั้น...</option>
+          <option>ม.1 / Grade 7</option>
+          <option>ม.2 / Grade 8</option>
+          <option>ม.3 / Grade 9 (เตรียมสอบ)</option>
+          <option>ม.4</option>
+          <option>ม.5</option>
+          <option>ม.6</option>
+          <option>ป.6 / Grade 6</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>คอร์สที่สนใจ</label>
+        <select>
+          <option value="">เลือกคอร์ส...</option>
+          <option>NEW Mock Exam TU89: The Final Tote (฿200)</option>
+          <option>คอร์สบูฟเฟต์เข้าเตรียมฯ รวม Final Sheet (฿6,000)</option>
+          <option>คอร์สสอวน. ชีววิทยา (฿2,000)</option>
+          <option>คอร์สคณิตศาสตร์สอวน. (฿2,000)</option>
+          <option>ม.4 เทอม 1 — เซต/ตรรกศาสตร์ (฿1,000 PRO)</option>
+          <option>ม.4 เทอม 2 — ความสัมพันธ์/เรขา (฿1,000 PRO)</option>
+          <option>Triam Maths (฿500)</option>
+          <option>Triam Physics (฿500)</option>
+          <option>Triam Chemistry (฿500)</option>
+          <option>Triam Biology (฿500)</option>
+          <option>Triam English (฿500)</option>
+          <option>Final Sheet สายวิทย์-คณิต (฿3,000)</option>
+          <option>Final Sheet สายศิลป์-คำนวณ (฿2,400)</option>
+          <option>Final Sheet สายศิลป์-ภาษา (฿1,800)</option>
+          <option>Mock Exam TU สายวิทย์-คณิต (฿1,000)</option>
+          <option>Mock Exam TU สายศิลป์-คำนวณ (฿800)</option>
+          <option>Mock Exam TU สายศิลป์-ภาษา (฿500)</option>
+          <option>TU Day Miracle 3 วิชา (฿500)</option>
+          <option>TU Day Miracle คณิต (฿200)</option>
+          <option>TU Day Miracle วิทย์ (฿200)</option>
+          <option>TU Day Miracle อังกฤษ (฿200)</option>
+          <option>Olympiad Maths Grade 6/7/8</option>
+          <option>อื่นๆ</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>ข้อความเพิ่มเติม (ไม่บังคับ)</label>
+        <textarea placeholder="เช่น มีคำถามเกี่ยวกับคอร์ส หรืออยากทราบข้อมูลเพิ่มเติม..."></textarea>
+      </div>
+      <button class="btn-submit">ส่งใบสมัคร →</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">
+    <img src="logo.jpg" alt="YZinstitute"/>
+    YZinstitute
+  </a>
+  <p>คอร์สเตรียมสอบเข้าเตรียมอุดมฯ · สอวน. · TU · Olympiad</p>
+  <p style="margin-top:1rem;font-size:0.78rem;">
+    <a href="#courses">คอร์สเรียน</a> &nbsp;·&nbsp;
+    <a href="#how">วิธีสมัคร</a> &nbsp;·&nbsp;
+    <a href="#booking">สมัครเรียน</a>
+  </p>
+  <p style="margin-top:1.5rem;font-size:0.72rem;opacity:0.4;">© 2026 YZinstitute. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
